@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS if() Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background-color: #0f172a;
+      font-family: "Roboto Mono", monospace;
+      font-optical-sizing: auto;
+      font-style: normal;
+    }
+    .demo {
+      max-width: 375px;
+      margin: 0 auto;
+      & > * {
+        margin-bottom: 16px;
+      }
+    }
+    h1 {
+      color: #fff;
+    }
+    .card {
+      /* Map data-status -> --status */
+      --status: attr(
+        data-status type(<custom-ident>), unknow
+      );
+      /* Fallback First - defautl */
+      background-color: #64748b;
+      border-left: 6px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px;
+      position: relative;
+
+      background-color: if(
+        style(--status: paid) : #16a34a;
+        style(--status: canceled) : #dc2626;
+        else : #64748b
+      );
+
+      border-left-color: if(
+        style(--status: paid) : #4ade80;
+        style(--status: canceled) : #f87171;
+        else : #cbd5e1
+      );
+
+      ::after {
+        position: absolute;
+        right: 8px;
+        content: if(
+          style(--status: paid) : "paid";
+          style(--status: canceled) : "canceled";
+          else : "default"
+        );
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="demo">
+    <h1>CSS if() Demo</h1>
+
+    <div class="card" data-status="paid">
+      <h3>Invoice #01</h3>
+    </div>
+    
+    <div class="card" data-status="default" >
+      <h3>Invoice #02</h3>
+    </div>
+
+    <div class="card" data-status="canceled">
+      <h3>Invoice #03</h3>
+    </div>
+  </div>
+</body>
+</html>
